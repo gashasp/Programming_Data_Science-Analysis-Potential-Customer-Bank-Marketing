@@ -1,0 +1,141 @@
+---
+title: "Programming for Data Science (Bank Data)"
+author: "Gasha Sarwono"
+date: "3/21/2021"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: united
+    highlight: tango
+
+---
+
+## 1.Explanataion
+##### Hello my name is Gasha Sarwono Putra and this is my Rmd.
+
+##### In this Rmd i want to exploratory data analysis using data bank.
+
+##### I hope you enjoy it :)
+
+## 2.Import Data
+**Import data bank to RStudio**
+```{r}
+bank <- read.csv("bank-additional/bank-additional-full.csv", sep=";")
+```
+
+### 2.1 Activated library
+```{r}
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+```
+
+## 3.Data Inspection
+**Inspect data before analysis data**
+```{r}
+#see 6 first data
+head(bank)
+```
+
+```{r}
+##see 6 last data
+tail(bank)
+```
+
+```{r}
+#see total row and column
+dim(bank)
+```
+
+```{r}
+#see index name of column
+names(bank)
+```
+**Summary Data Inspection:**
+
+1. Data bank has 41188 rows and 21 columns
+
+2. Names from index column: 
+"age","job","marital","education","default","housing","loan","contact","month","day_of_week","duration","campaign","pdays","previous","poutcome","emp.var.rate",cons.price.idx","cons.conf.idx","euribor3m","nr.employed","y"
+
+
+## 4.Data Cleansing
+**Before cleansing the data, you need to know the point of each column, here is the explanation:**
+
+**1. Bank client data:**
+
+- age : customer age (numeric)
+- job : type of job (categorical: 'admin.','blue-collar','entrepreneur','housemaid','management','retired','self-employed','services','student','technician','unemployed','unknown')
+- marital : marital status (categorical: 'divorced','married','single','unknown'; note: 'divorced' means divorced or widowed)
+- education (categorical: 'basic.4y','basic.6y','basic.9y','high.school','illiterate','professional.course','university.degree','unknown')
+- default: has credit in default? (categorical: 'no','yes','unknown')
+- housing: has housing loan? (categorical: 'no','yes','unknown')
+- loan: has personal loan? (categorical: 'no','yes','unknown')
+
+**2. Related with the last contact of the current campaign:**
+
+- contact: contact communication type (categorical: 'cellular','telephone')
+- month: last contact month of year (categorical: 'jan', 'feb', 'mar', ..., 'nov', 'dec')
+- day_of_week: last contact day of the week (categorical: 'mon','tue','wed','thu','fri')
+- duration: last contact duration, in seconds (numeric). Important note: this attribute highly affects the output target (e.g., if duration=0 then y='no'). Yet, the duration is not known before a call is performed. Also, after the end of the call y is obviously known. Thus, this input should only be included for benchmark purposes and should be discarded if the intention is to have a realistic predictive model.
+
+**3. Other attributes:**
+
+- campaign: number of contacts performed during this campaign and for this client (numeric, includes last contact)
+- pdays: number of days that passed by after the client was last contacted from a previous campaign (numeric; 999 means client was not previously contacted)
+- previous: number of contacts performed before this campaign and for this client (numeric)
+- poutcome: outcome of the previous marketing campaign (categorical: 'failure','nonexistent','success')
+
+**4. Social and economic context attributes**
+
+- emp.var.rate: employment variation rate - quarterly indicator (numeric)
+- cons.price.idx: consumer price index - monthly indicator (numeric)
+- cons.conf.idx: consumer confidence index - monthly indicator (numeric)
+- euribor3m: euribor 3 month rate - daily indicator (numeric)
+- nr.employed: number of employees - quarterly indicator (numeric)
+
+**5. Output variable (desired target):**
+
+- y - has the client subscribed a term deposit? (binary: 'yes','no')*
+```{r}
+#check data type for each column
+str(bank)
+```
+**There is a column with an inappropriate data type:**
+**( "job", "maritial", "education", "default", "housing", "loan", "contact", "month", "day_of_week","poutcome", "y" )**
+
+```{r}
+#change type data with an inappropiate
+bank$job <- as.factor(bank$job)
+bank$marital <- as.factor(bank$marital)
+bank$education <- as.factor(bank$education)
+bank$default <- as.factor(bank$default)
+bank$housing <- as.factor(bank$housing)
+bank$loan <- as.factor(bank$loan)
+bank$contact <- as.factor(bank$contact)
+bank$month <- as.factor(bank$month)
+bank$day_of_week <- as.factor(bank$day_of_week)
+bank$poutcome <- as.factor(bank$poutcome)
+bank$y <- as.factor(bank$y)
+```
+
+```{r}
+#check type data after changing
+str(bank)
+```
+
+**Type data for all columns is already appropriate**
+
+```{r}
+#check missing value
+colSums(is.na(bank))
+```
+**Data bank no have missing value**
+
+## Summary
+##### 1. Data bank has 41188 rows and 21 columns
+##### 2. Names from index column: 
+##### "age","job","marital","education","default","housing","loan","contact","month","day_of_week","duration","campaign","pdays","previous","poutcome","emp.var.rate",cons.price.idx","cons.conf.idx","euribor3m","nr.employed","y"
+##### 3. Type data for bank data consist of interger, factor, and numeric
+##### 4. Data bank no have missing value

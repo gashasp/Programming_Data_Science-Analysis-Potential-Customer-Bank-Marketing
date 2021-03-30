@@ -5,4 +5,4 @@ Programming for Data Science (Bank Marketing Data)
 
 ## --Result--
 You can also see on my RPubs : https://rpubs.com/gashasp/747053
-<img src="...">
+<img src="https://github.com/gashasp/Programming_Data_Science-Analysis-Potential-Customer-Bank-Marketing/blob/main/Capture2.JPG">
